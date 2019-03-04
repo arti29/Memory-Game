@@ -1,0 +1,266 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Background pattern from Subtle Patterns */
+body {
+  background: #ffffff url('../img/geometry2.png');
+  font-family: 'Coda', cursive;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+
+/*
+* Styles for the deck of cards
+*/
+
+.deck {
+  width: 660px;
+  min-height: 680px;
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 3em;
+}
+
+.deck .card {
+  height: 125px;
+  width: 125px;
+  background: #2e3d49;
+  font-size: 0;
+  color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+  transition: transform 0.5s;
+}
+
+.deck .card.open {
+  transform: rotateY(180deg);
+  background: #02b3e4;
+  cursor: default;
+}
+
+.deck .card.show {
+  font-size: 33px;
+}
+
+.deck .card.match {
+  cursor: default;
+  background: #02ccba;
+  font-size: 33px;
+  animation-name: rubberBand;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+
+}
+
+@keyframes rubberBand {
+  0% {transform: scale(1);}
+  30% {transform: scaleX(1.25) scaleY(0.75);}
+  40% {transform: scaleX(0.75) scaleY(1.25);}
+  60% {transform: scaleX(1.15) scaleY(0.85);}
+  100% {transform: scale(1);}
+}
+
+
+.deck .card.unmatched {
+  cursor: default;
+  background: red;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(1deg); }
+  20% { transform: translate(-3px, 0px) rotate(2deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/*
+* Styles for the Score Panel
+*/
+
+.score-panel {
+  text-align: left;
+  width: 345px;
+  margin-bottom: 10px;
+}
+
+.score-panel .stars {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+  list-style: none;
+  display: inline-block;
+}
+
+.score-panel .restart {
+  float: right;
+  cursor: pointer;
+}
+
+/*
+Style for game over overlay
+*/
+
+.modal {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(246, 247, 251, 0.93);
+  z-index: 2;
+  text-align: center;
+  align-items: center;
+}
+
+#modalText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  color: black;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+.button {
+  background-color: #02ccba;
+  border: 1px thin black;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cross {
+  font-size: 50px;
+  float: right;
+  cursor: pointer;
+  margin-right: 0.5em;
+}
+
+/*
+Styles for game instruction overlay
+*/
+
+.instructionButton{
+  border: 1px thin black;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(55, 76, 146, 0.93);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+/****** Media queries
+***************************/
+/* For mobile screens
+****************/
+
+@media (max-width: 320px) {
+	.deck {
+		width: 85%;
+	}
+
+	.deck .card {
+		height: 4.7rem;
+		width: 4.7rem;
+	}
+
+  .score-panel {
+    width: 80%;
+  }
+
+  #text {
+    font-size: 13px;
+  }
+}
+/* For tablets screens
+****************/
+
+@media (min-width: 321px) and (max-width: 669px) {
+  .deck {
+		width: 95%;
+	}
+
+  .deck .card {
+		height: 5.0rem;
+		width: 5.0rem;
+	}
+
+  .score-panel {
+    width: 95%;
+  }
+
+  #text {
+    font-size: 13px;
+  }
+}
